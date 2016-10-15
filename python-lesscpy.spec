@@ -8,7 +8,7 @@ Summary:	Python LESS Compiler
 Summary(pl.UTF-8):	Kompilator języka LESS w Pythonie
 Name:		python-lesscpy
 Version:	0.12.0
-Release:	2
+Release:	3
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/lesscpy
@@ -112,7 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{with python2}
 %py_install
-%py_postclean
+# source required for ply to work
+%py_postclean -x 'parser\.py'
 
 %{__mv} $RPM_BUILD_ROOT%{_bindir}/lesscpy{,-2}
 ln -sf lesscpy-2 $RPM_BUILD_ROOT%{_bindir}/lesscpy
