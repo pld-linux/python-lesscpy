@@ -89,7 +89,7 @@ składni i może kompresji YUI.
 
 %prep
 %setup -q -n lesscpy-%{version}
-%patch0 -p1
+%patch -P 0 -p1
 
 %build
 %if %{with python2}
