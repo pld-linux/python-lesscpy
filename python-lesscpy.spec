@@ -7,14 +7,13 @@
 Summary:	Python LESS Compiler
 Summary(pl.UTF-8):	Kompilator języka LESS w Pythonie
 Name:		python-lesscpy
-Version:	0.12.0
-Release:	12
+Version:	0.14.0
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/lesscpy
 Source0:	https://files.pythonhosted.org/packages/source/l/lesscpy/lesscpy-%{version}.tar.gz
-# Source0-md5:	0a5a3ca4091ad3fb62ac6f705f8463d4
-Patch0:		%{name}-tests.patch
+# Source0-md5:	efe82be479ddb7bdc48b2114dab94b20
 URL:		https://pypi.python.org/pypi/lesscpy
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -89,7 +88,6 @@ składni i może kompresji YUI.
 
 %prep
 %setup -q -n lesscpy-%{version}
-%patch -P 0 -p1
 
 %build
 %if %{with python2}
@@ -98,7 +96,12 @@ składni i może kompresji YUI.
 
 %if %{with python3}
 LC_ALL=en_US.UTF-8 \
-%py3_build %{?with_tests:test}
+%py3_build
+%if %{with tests}
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
+PYTEST_PLUGINS= \
+%{__python3} -m pytest test
+%endif
 %endif
 
 %install
